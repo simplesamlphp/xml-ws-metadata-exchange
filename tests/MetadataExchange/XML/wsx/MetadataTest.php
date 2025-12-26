@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleSAML\Test\WebServices\MetadataExchange\XML\wsx;
+
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\TestCase;
+use SimpleSAML\WebServices\MetadataExchange\XML\wsx\AbstractWsxElement;
+use SimpleSAML\WebServices\MetadataExchange\XML\wsx\Location;
+use SimpleSAML\WebServices\MetadataExchange\XML\wsx\Metadata;
+use SimpleSAML\WebServices\MetadataExchange\XML\wsx\MetadataSection;
+use SimpleSAML\XML\Attribute;
+use SimpleSAML\XML\Chunk;
+use SimpleSAML\XML\DOMDocumentFactory;
+use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
+use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
+use SimpleSAML\XMLSchema\Type\AnyURIValue;
+use SimpleSAML\XMLSchema\Type\StringValue;
+
+use function dirname;
+use function strval;
+
+/**
+ * Tests for wsx:Metadata.
+ *
+ * @package simplesamlphp/xml-ws-metadata-exchange
+ */
+#[Group('wsx')]
+#[CoversClass(Metadata::class)]
+#[CoversClass(AbstractWsxElement::class)]
+final class MetadataTest extends TestCase
+{
+    use SchemaValidationTestTrait;
+    use SerializableElementTestTrait;
+
+
+    /**
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$testedClass = Metadata::class;
+
+        self::$xmlRepresentation = DOMDocumentFactory::FromFile(
+            dirname(__FILE__, 4) . '/resources/xml/wsx/Metadata.xml',
+        );
+    }
+
+
+    // test marshalling
+
+
+    /**
+     * Test creating an Metadata object from scratch.
+     */
+    public function testMarshalling(): void
+    {
+        $attr1 = new Attribute('urn:x-simplesamlphp:namespace', 'ssp', 'attr1', StringValue::fromString('testval1'));
+        $attr2 = new Attribute('urn:x-simplesamlphp:namespace', 'ssp', 'attr2', StringValue::fromString('testval2'));
+
+        $child = DOMDocumentFactory::fromString(
+            '<ssp:Chunk xmlns:ssp="urn:x-simplesamlphp:namespace">Some</ssp:Chunk>',
+        );
+
+        $metadataSection = new MetadataSection(
+            new Location(AnyURIValue::fromString('urn:x-simplesamlphp:namespace')),
+            AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
+            AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
+            [$attr2],
+        );
+
+        $metadata = new Metadata([$metadataSection], [new Chunk($child->documentElement)], [$attr1]);
+
+        $this->assertEquals(
+            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
+            strval($metadata),
+        );
+    }
+
+
+    /**
+     */
+    public function testMarshallingEmpty(): void
+    {
+        $metadata = new Metadata();
+
+        $this->assertTrue($metadata->isEmptyElement());
+    }
+}
