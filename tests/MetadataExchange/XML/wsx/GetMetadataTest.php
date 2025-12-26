@@ -63,6 +63,7 @@ final class GetMetadataTest extends TestCase
             [$attr1],
         );
 
+        $this->assertFalse($getMetadata->isEmptyElement());
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
             strval($getMetadata),
