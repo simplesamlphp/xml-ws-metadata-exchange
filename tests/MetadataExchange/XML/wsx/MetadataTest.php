@@ -64,7 +64,7 @@ final class MetadataTest extends TestCase
         );
 
         $metadataSection = new MetadataSection(
-            new Location(AnyURIValue::fromString('urn:x-simplesamlphp:namespace')),
+            Location::fromString('urn:x-simplesamlphp:namespace'),
             AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
             AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
             [$attr2],

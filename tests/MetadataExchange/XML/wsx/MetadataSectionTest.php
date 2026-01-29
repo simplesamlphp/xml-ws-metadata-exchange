@@ -57,7 +57,7 @@ final class MetadataSectionTest extends TestCase
         $attr1 = new Attribute('urn:x-simplesamlphp:namespace', 'ssp', 'attr1', StringValue::fromString('testval1'));
 
         $metadataSection = new MetadataSection(
-            new Location(AnyURIValue::fromString('urn:x-simplesamlphp:namespace')),
+            Location::fromString('urn:x-simplesamlphp:namespace'),
             AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
             AnyURIValue::fromString('urn:x-simplesamlphp:namespace'),
             [$attr1],

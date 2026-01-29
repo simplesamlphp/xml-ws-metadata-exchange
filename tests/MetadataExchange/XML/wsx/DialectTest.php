@@ -13,7 +13,6 @@ use SimpleSAML\WebServices\MetadataExchange\XML\wsx\Dialect;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 
 use function dirname;
 
@@ -51,7 +50,7 @@ final class DialectTest extends TestCase
      */
     public function testMarshalling(): void
     {
-        $dialect = new Dialect(AnyURIValue::fromString(C::NAMESPACE));
+        $dialect = Dialect::fromString(C::NAMESPACE);
 
         $this->assertEquals(
             self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),

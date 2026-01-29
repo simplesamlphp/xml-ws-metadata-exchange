@@ -15,7 +15,6 @@ use SimpleSAML\XML\Attribute;
 use SimpleSAML\XML\DOMDocumentFactory;
 use SimpleSAML\XML\TestUtils\SchemaValidationTestTrait;
 use SimpleSAML\XML\TestUtils\SerializableElementTestTrait;
-use SimpleSAML\XMLSchema\Type\AnyURIValue;
 use SimpleSAML\XMLSchema\Type\StringValue;
 
 use function dirname;
@@ -58,8 +57,8 @@ final class GetMetadataTest extends TestCase
         $attr1 = new Attribute('urn:x-simplesamlphp:namespace', 'ssp', 'attr1', StringValue::fromString('testval1'));
 
         $getMetadata = new GetMetadata(
-            new Dialect(AnyURIValue::fromString('urn:x-simplesamlphp:namespace')),
-            new Identifier(AnyURIValue::fromString('urn:x-simplesamlphp:namespace')),
+            Dialect::fromString('urn:x-simplesamlphp:namespace'),
+            Identifier::fromString('urn:x-simplesamlphp:namespace'),
             [$attr1],
         );
 
