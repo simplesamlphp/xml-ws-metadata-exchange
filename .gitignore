@@ -1,4 +1,8 @@
+1
+2
+3
 /build/
+.phplint.cache	
 /.phpunit.cache/
 /.phpunit.result.cache
 /cache.properties
