@@ -63,9 +63,10 @@ final class MetadataSectionTest extends TestCase
             [$attr1],
         );
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($metadataSection),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($metadataSection);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

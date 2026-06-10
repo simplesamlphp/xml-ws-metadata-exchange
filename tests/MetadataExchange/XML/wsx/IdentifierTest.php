@@ -52,9 +52,10 @@ final class IdentifierTest extends TestCase
     {
         $identifier = Identifier::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($identifier),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($identifier);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

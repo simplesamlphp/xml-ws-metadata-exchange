@@ -52,9 +52,10 @@ final class DialectTest extends TestCase
     {
         $dialect = Dialect::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($dialect),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($dialect);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }

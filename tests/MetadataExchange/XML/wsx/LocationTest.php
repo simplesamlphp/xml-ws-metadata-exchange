@@ -52,9 +52,10 @@ final class LocationTest extends TestCase
     {
         $location = Location::fromString(C::NAMESPACE);
 
-        $this->assertEquals(
-            self::$xmlRepresentation->saveXML(self::$xmlRepresentation->documentElement),
-            strval($location),
-        );
+        $expectedXml = self::$xmlRepresentation->saveXml(self::$xmlRepresentation->documentElement);
+        $this->assertNotFalse($expectedXml);
+        $actualXml = strval($location);
+
+        $this->assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 }
