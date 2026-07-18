@@ -13,7 +13,7 @@ use SimpleSAML\XMLSchema\Exception\InvalidDOMElementException;
 use SimpleSAML\XMLSchema\Exception\TooManyElementsException;
 use SimpleSAML\XMLSchema\XML\Constants\NS;
 
-use function array_pop;
+use function array_last;
 
 /**
  * Class defining the GetMetadata element
@@ -97,8 +97,8 @@ final class GetMetadata extends AbstractWsxElement implements SchemaValidatableE
         Assert::maxCount($identifier, 1, TooManyElementsException::class);
 
         return new static(
-            array_pop($dialect),
-            array_pop($identifier),
+            array_last($dialect),
+            array_last($identifier),
             self::getAttributesNSFromXML($xml),
         );
     }
