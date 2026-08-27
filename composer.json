@@ -17,6 +17,7 @@
         "simplesamlphp/xml-common": "~2.8"
     },
     "require-dev": {
+        "phpunit/phpunit": "^13.3",
         "simplesamlphp/simplesamlphp-test-framework": "~1.11",
         "simplesamlphp/xml-ws-addressing": "~1.3"
     },
